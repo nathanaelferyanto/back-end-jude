@@ -1,11 +1,29 @@
-FROM node:16
+# Gunakan node:lts-alpine sebagai base image
+FROM node:16-alpine
 
-WORKDIR /app
+# Set environment production
+# ENV NODE_ENV=production
 
-COPY package.json ./
-RUN npm install
+# Set working directory
+WORKDIR /usr/src/app
 
+# Copy package files
+COPY ["package.json", "package-lock.json*", "./"]
 
-EXPOSE 3000
+# Update npm to version 10.2.4
+RUN npm install --production
 
-CMD ["node", "index.js"]
+# Copy the rest of the application files
+COPY . .
+
+# Expose port 3000
+EXPOSE 8080
+
+# Change ownership to the 'node' user
+RUN chown -R node /usr/src/app
+
+# Switch to the 'node' user
+USER node
+
+# Start the application
+CMD ["npm", "start"]
