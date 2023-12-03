@@ -1,13 +1,13 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/backend-jude/asia.gcr.io/backend-jude/', '.']
+  args: ['build', '-t', 'asia.gcr.io/backend-jude/app-engine-tmp', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/backend-jude/asia.gcr.io/backend-jude/']
+  args: ['push', 'asia.gcr.io/backend-jude/app-engine-tmp']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'backend-jude', '--image', 'gcr.io/backend-jude/asia.gcr.io/backend-jude/', '--region', 'us-central1']
+  args: ['run', 'deploy', 'backend-jude', '--image', 'asia.gcr.io/backend-jude/app-engine-tmp', '--region', 'us-central1']
 images:
-- gcr.io/backend-jude/asia.gcr.io/backend-jude/
+- asia.gcr.io/backend-jude/app-engine-tmp
