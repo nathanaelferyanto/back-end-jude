@@ -8,6 +8,24 @@ steps:
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'backend-jude', '--image', 'asia.gcr.io/backend-jude/app-engine-tmp', '--region', 'us-central1']
+  args: 
+  - 'run'
+  - 'deploy'
+  - 'test-jude'
+  - '--image'
+  - 'asia.gcr.io/backend-jude/app-engine-tmp'
+  - '--set-env-vars'
+  - 'DB_USER=root,DB_PASS=password,DB_NAME=db_jude,INSTANCE_HOST=34.70.175.137,DB_PORT=3306,SECRET_KEY="iR0FfMkRs51UaWiaxF1WOtgwwrdaXuQmCJTIa3KmvK2TbH0ERdTpKZBrjug1fbtb"'
+  - '--region'
+  - 'us-central1'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'  # Remove if not needed
+  - '--port'
+  - '8080'  # Update with your Node.js application port
+  - '--memory'
+  - '256Mi'  # Update with your preferred memory limit
+  - '--cpu'
+  - '1'  # Update with your preferred CPU limit 
 images:
 - asia.gcr.io/backend-jude/app-engine-tmp
